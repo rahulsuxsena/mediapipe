@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.blaze/modules/.project-data-dir.iml" filepath="$PROJECT_DIR$/.blaze/modules/.project-data-dir.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.blaze/modules/.workspace.iml" filepath="$PROJECT_DIR$/.blaze/modules/.workspace.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.blaze/modules/mediapipe.examples.android.src.java.com.google.mediapipe.apps.edgedetectiongpu.mediapipe_lib.iml" filepath="$PROJECT_DIR$/.blaze/modules/mediapipe.examples.android.src.java.com.google.mediapipe.apps.edgedetectiongpu.mediapipe_lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.blaze/modules/mediapipe.examples.android.src.java.com.google.mediapipe.apps.facedetectioncpu.mediapipe_lib.iml" filepath="$PROJECT_DIR$/.blaze/modules/mediapipe.examples.android.src.java.com.google.mediapipe.apps.facedetectioncpu.mediapipe_lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.blaze/modules/mediapipe.examples.android.src.java.com.google.mediapipe.apps.facedetectiongpu.mediapipe_lib.iml" filepath="$PROJECT_DIR$/.blaze/modules/mediapipe.examples.android.src.java.com.google.mediapipe.apps.facedetectiongpu.mediapipe_lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.blaze/modules/mediapipe.examples.android.src.java.com.google.mediapipe.apps.hairsegmentationgpu.mediapipe_lib.iml" filepath="$PROJECT_DIR$/.blaze/modules/mediapipe.examples.android.src.java.com.google.mediapipe.apps.hairsegmentationgpu.mediapipe_lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.blaze/modules/mediapipe.examples.android.src.java.com.google.mediapipe.apps.handdetectiongpu.mediapipe_lib.iml" filepath="$PROJECT_DIR$/.blaze/modules/mediapipe.examples.android.src.java.com.google.mediapipe.apps.handdetectiongpu.mediapipe_lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.blaze/modules/mediapipe.examples.android.src.java.com.google.mediapipe.apps.handtrackinggpu.mediapipe_lib.iml" filepath="$PROJECT_DIR$/.blaze/modules/mediapipe.examples.android.src.java.com.google.mediapipe.apps.handtrackinggpu.mediapipe_lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.blaze/modules/mediapipe.examples.android.src.java.com.google.mediapipe.apps.multihandtrackinggpu.mediapipe_lib.iml" filepath="$PROJECT_DIR$/.blaze/modules/mediapipe.examples.android.src.java.com.google.mediapipe.apps.multihandtrackinggpu.mediapipe_lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.blaze/modules/mediapipe.examples.android.src.java.com.google.mediapipe.apps.objectdetectioncpu.mediapipe_lib.iml" filepath="$PROJECT_DIR$/.blaze/modules/mediapipe.examples.android.src.java.com.google.mediapipe.apps.objectdetectioncpu.mediapipe_lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.blaze/modules/mediapipe.examples.android.src.java.com.google.mediapipe.apps.objectdetectiongpu.mediapipe_lib.iml" filepath="$PROJECT_DIR$/.blaze/modules/mediapipe.examples.android.src.java.com.google.mediapipe.apps.objectdetectiongpu.mediapipe_lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.blaze/modules/mediapipe.examples.android.src.java.com.google.mediapipe.apps.objecttrackinggpu.mediapipe_lib.iml" filepath="$PROJECT_DIR$/.blaze/modules/mediapipe.examples.android.src.java.com.google.mediapipe.apps.objecttrackinggpu.mediapipe_lib.iml" />
+    </modules>
+  </component>
+</project>

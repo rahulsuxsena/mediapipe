@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="drawerlayout-1.0.0_ed3d309d">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.blaze/aar_libraries/drawerlayout-1.0.0_e04b9c95.aar/jars/classes_and_libs_merged.jar!/" />
+      <root url="file://$PROJECT_DIR$/.blaze/aar_libraries/drawerlayout-1.0.0_e04b9c95.aar/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

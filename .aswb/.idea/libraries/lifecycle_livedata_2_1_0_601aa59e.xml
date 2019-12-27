@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="lifecycle-livedata-2.1.0_601aa59e">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.blaze/aar_libraries/lifecycle-livedata-2.1.0_a3225dbc.aar/jars/classes_and_libs_merged.jar!/" />
+      <root url="file://$PROJECT_DIR$/.blaze/aar_libraries/lifecycle-livedata-2.1.0_a3225dbc.aar/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

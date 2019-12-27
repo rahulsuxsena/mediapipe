@@ -1,0 +1,22 @@
+directories:
+  .
+  -mediapipe/objc
+  -mediapipe/examples/ios
+
+# Automatically includes all relevant targets under the 'directories' above
+derive_targets_from_directories: true
+
+targets:
+  # If source code isn't resolving, add additional targets that compile it here
+  //mediapipe/examples/android/...:all
+  //mediapipe/java/...:all
+
+additional_languages:
+  # Uncomment any additional languages you want supported
+  # c
+  # dart
+  # kotlin
+  # python
+
+
+android_sdk_platform: android-29

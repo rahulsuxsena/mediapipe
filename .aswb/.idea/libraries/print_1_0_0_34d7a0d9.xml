@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="print-1.0.0_34d7a0d9">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.blaze/aar_libraries/print-1.0.0_a13e87.aar/jars/classes_and_libs_merged.jar!/" />
+      <root url="file://$PROJECT_DIR$/.blaze/aar_libraries/print-1.0.0_a13e87.aar/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="vectordrawable-1.1.0-rc01_a9a4c9c1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.blaze/aar_libraries/vectordrawable-1.1.0-rc01_deee33a7.aar/jars/classes_and_libs_merged.jar!/" />
+      <root url="file://$PROJECT_DIR$/.blaze/aar_libraries/vectordrawable-1.1.0-rc01_deee33a7.aar/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

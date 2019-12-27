@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="versionedparcelable-1.1.0_31c0e9f4">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.blaze/aar_libraries/versionedparcelable-1.1.0_59d27fd0.aar/jars/classes_and_libs_merged.jar!/" />
+      <root url="file://$PROJECT_DIR$/.blaze/aar_libraries/versionedparcelable-1.1.0_59d27fd0.aar/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

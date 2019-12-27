@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="cardview-1.0.0-rc01_f9b5e7e2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.blaze/aar_libraries/cardview-1.0.0-rc01_3fe6fc95.aar/jars/classes_and_libs_merged.jar!/" />
+      <root url="file://$PROJECT_DIR$/.blaze/aar_libraries/cardview-1.0.0-rc01_3fe6fc95.aar/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
