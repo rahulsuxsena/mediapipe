@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="lifecycle-common-2.0.0-ijar_8606a18e">
-    <CLASSES>
-      <root url="jar://$USER_HOME$/.cache/bazel/_bazel_prince/2c0029220fda8bf56e7d1a5c76230504/execroot/mediapipe/bazel-out/k8-fastbuild/bin/external/androidx_lifecycle/jar/_ijar/jar/external/androidx_lifecycle/jar/lifecycle-common-2.0.0-ijar.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

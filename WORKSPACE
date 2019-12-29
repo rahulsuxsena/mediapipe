@@ -3,32 +3,36 @@ workspace(name = "mediapipe")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 skylib_version = "0.8.0"
+
 http_archive(
     name = "bazel_skylib",
-    type = "tar.gz",
-    url = "https://github.com/bazelbuild/bazel-skylib/releases/download/{}/bazel-skylib.{}.tar.gz".format (skylib_version, skylib_version),
     sha256 = "2ef429f5d7ce7111263289644d233707dba35e39696377ebab8b0bc701f7818e",
+    type = "tar.gz",
+    url = "https://github.com/bazelbuild/bazel-skylib/releases/download/{}/bazel-skylib.{}.tar.gz".format(skylib_version, skylib_version),
 )
-load("@bazel_skylib//lib:versions.bzl", "versions")
-versions.check(minimum_bazel_version = "0.24.1",
-               maximum_bazel_version = "1.2.1")
 
+load("@bazel_skylib//lib:versions.bzl", "versions")
+
+versions.check(
+    minimum_bazel_version = "0.24.1",
+    maximum_bazel_version = "1.2.1",
+)
 
 # ABSL cpp library lts_2019_08_08.
 http_archive(
     name = "com_google_absl",
-    urls = [
-        "https://github.com/abseil/abseil-cpp/archive/20190808.tar.gz",
-    ],
-    # Remove after https://github.com/abseil/abseil-cpp/issues/326 is solved.
-    patches = [
-        "@//third_party:com_google_absl_f863b622fe13612433fdf43f76547d5edda0c93001.diff"
-    ],
     patch_args = [
         "-p1",
     ],
+    # Remove after https://github.com/abseil/abseil-cpp/issues/326 is solved.
+    patches = [
+        "@//third_party:com_google_absl_f863b622fe13612433fdf43f76547d5edda0c93001.diff",
+    ],
+    sha256 = "8100085dada279bf3ee00cd064d43b5f55e5d913be0dfe2906f06f8f28d5b37e",
     strip_prefix = "abseil-cpp-20190808",
-    sha256 = "8100085dada279bf3ee00cd064d43b5f55e5d913be0dfe2906f06f8f28d5b37e"
+    urls = [
+        "https://github.com/abseil/abseil-cpp/archive/20190808.tar.gz",
+    ],
 )
 
 http_archive(
@@ -39,17 +43,17 @@ http_archive(
 
 # GoogleTest/GoogleMock framework. Used by most unit-tests.
 http_archive(
-     name = "com_google_googletest",
-     urls = ["https://github.com/google/googletest/archive/master.zip"],
-     strip_prefix = "googletest-master",
+    name = "com_google_googletest",
+    strip_prefix = "googletest-master",
+    urls = ["https://github.com/google/googletest/archive/master.zip"],
 )
 
 # Google Benchmark library.
 http_archive(
     name = "com_google_benchmark",
-    urls = ["https://github.com/google/benchmark/archive/master.zip"],
-    strip_prefix = "benchmark-master",
     build_file = "@//third_party:benchmark.BUILD",
+    strip_prefix = "benchmark-master",
+    urls = ["https://github.com/google/benchmark/archive/master.zip"],
 )
 
 # gflags needed by glog
@@ -66,23 +70,23 @@ http_archive(
 # glog
 http_archive(
     name = "com_github_glog_glog",
-    url = "https://github.com/google/glog/archive/v0.3.5.zip",
-    sha256 = "267103f8a1e9578978aa1dc256001e6529ef593e5aea38193d31c2872ee025e8",
-    strip_prefix = "glog-0.3.5",
     build_file = "@//third_party:glog.BUILD",
-    patches = [
-        "@//third_party:com_github_glog_glog_9779e5ea6ef59562b030248947f787d1256132ae.diff"
-    ],
     patch_args = [
         "-p1",
     ],
+    patches = [
+        "@//third_party:com_github_glog_glog_9779e5ea6ef59562b030248947f787d1256132ae.diff",
+    ],
+    sha256 = "267103f8a1e9578978aa1dc256001e6529ef593e5aea38193d31c2872ee025e8",
+    strip_prefix = "glog-0.3.5",
+    url = "https://github.com/google/glog/archive/v0.3.5.zip",
 )
 
 # libyuv
 http_archive(
     name = "libyuv",
-    urls = ["https://chromium.googlesource.com/libyuv/libyuv/+archive/refs/heads/master.tar.gz"],
     build_file = "@//third_party:libyuv.BUILD",
+    urls = ["https://chromium.googlesource.com/libyuv/libyuv/+archive/refs/heads/master.tar.gz"],
 )
 
 http_archive(
@@ -111,38 +115,43 @@ http_archive(
 
 # 2019-11-21
 _TENSORFLOW_GIT_COMMIT = "f482488b481a799ca07e7e2d153cf47b8e91a60c"
-_TENSORFLOW_SHA256= "8d9118c2ce186c7e1403f04b96982fe72c184060c7f7a93e30a28dca358694f0"
+#_TENSORFLOW_GIT_COMMIT = "c782a538b0b90d93c6070ac177cb1f542272bcce"
+
+_TENSORFLOW_SHA256 = "8d9118c2ce186c7e1403f04b96982fe72c184060c7f7a93e30a28dca358694f0"
+#_TENSORFLOW_SHA256 = "22645e778b77713c57fb581b71a320038d65411a61f672eca718e4f371667ae6"
+
 http_archive(
     name = "org_tensorflow",
-    urls = [
-      "https://mirror.bazel.build/github.com/tensorflow/tensorflow/archive/%s.tar.gz" % _TENSORFLOW_GIT_COMMIT,
-      "https://github.com/tensorflow/tensorflow/archive/%s.tar.gz" % _TENSORFLOW_GIT_COMMIT,
-    ],
-    # Patch https://github.com/tensorflow/tensorflow/commit/e3a7bdbebb99352351a19e2e403136166aa52934
-    patches = [
-        "@//third_party:org_tensorflow_e3a7bdbebb99352351a19e2e403136166aa52934.diff"
-    ],
     patch_args = [
         "-p1",
     ],
-    strip_prefix = "tensorflow-%s" % _TENSORFLOW_GIT_COMMIT,
+    # Patch https://github.com/tensorflow/tensorflow/commit/e3a7bdbebb99352351a19e2e403136166aa52934
+    patches = [
+        "@//third_party:org_tensorflow_e3a7bdbebb99352351a19e2e403136166aa52934.diff",
+    ],
     sha256 = _TENSORFLOW_SHA256,
+    strip_prefix = "tensorflow-%s" % _TENSORFLOW_GIT_COMMIT,
+    urls = [
+        "https://mirror.bazel.build/github.com/tensorflow/tensorflow/archive/%s.tar.gz" % _TENSORFLOW_GIT_COMMIT,
+        "https://github.com/tensorflow/tensorflow/archive/%s.tar.gz" % _TENSORFLOW_GIT_COMMIT,
+    ],
 )
 
 load("@org_tensorflow//tensorflow:workspace.bzl", "tf_workspace")
+
 tf_workspace(tf_repo_name = "org_tensorflow")
 
 http_archive(
     name = "ceres_solver",
-    url = "https://github.com/ceres-solver/ceres-solver/archive/1.14.0.zip",
-    patches = [
-        "@//third_party:ceres_solver_9bf9588988236279e1262f75d7f4d85711dfa172.diff"
-    ],
     patch_args = [
         "-p1",
     ],
+    patches = [
+        "@//third_party:ceres_solver_9bf9588988236279e1262f75d7f4d85711dfa172.diff",
+    ],
+    sha256 = "5ba6d0db4e784621fda44a50c58bb23b0892684692f0c623e2063f9c19f192f1",
     strip_prefix = "ceres-solver-1.14.0",
-    sha256 = "5ba6d0db4e784621fda44a50c58bb23b0892684692f0c623e2063f9c19f192f1"
+    url = "https://github.com/ceres-solver/ceres-solver/archive/1.14.0.zip",
 )
 
 # Please run
@@ -158,7 +167,7 @@ new_local_repository(
 new_local_repository(
     name = "linux_ffmpeg",
     build_file = "@//third_party:ffmpeg_linux.BUILD",
-    path = "/usr"
+    path = "/usr",
 )
 
 # Please run $ brew install opencv@3
@@ -188,19 +197,20 @@ http_archive(
 # '-DBUILD_PROTOBUF=OFF -DBUILD_opencv_dnn=OFF'.
 http_archive(
     name = "ios_opencv",
-    sha256 = "7dd536d06f59e6e1156b546bd581523d8df92ce83440002885ec5abc06558de2",
     build_file = "@//third_party:opencv_ios.BUILD",
+    sha256 = "7dd536d06f59e6e1156b546bd581523d8df92ce83440002885ec5abc06558de2",
     type = "zip",
     url = "https://github.com/opencv/opencv/releases/download/3.2.0/opencv-3.2.0-ios-framework.zip",
 )
 
 RULES_JVM_EXTERNAL_TAG = "2.2"
+
 RULES_JVM_EXTERNAL_SHA = "f1203ce04e232ab6fdd81897cf0ff76f2c04c0741424d192f28e65ae752ce2d6"
 
 http_archive(
     name = "rules_jvm_external",
-    strip_prefix = "rules_jvm_external-%s" % RULES_JVM_EXTERNAL_TAG,
     sha256 = RULES_JVM_EXTERNAL_SHA,
+    strip_prefix = "rules_jvm_external-%s" % RULES_JVM_EXTERNAL_TAG,
     url = "https://github.com/bazelbuild/rules_jvm_external/archive/%s.zip" % RULES_JVM_EXTERNAL_TAG,
 )
 
@@ -232,15 +242,15 @@ maven_server(
 maven_jar(
     name = "androidx_lifecycle",
     artifact = "androidx.lifecycle:lifecycle-common:2.0.0",
-    sha1 = "e070ffae07452331bc5684734fce6831d531785c",
     server = "google_server",
+    sha1 = "e070ffae07452331bc5684734fce6831d531785c",
 )
 
 maven_jar(
     name = "androidx_concurrent_futures",
     artifact = "androidx.concurrent:concurrent-futures:1.0.0-alpha03",
-    sha1 = "b528df95c7e2fefa2210c0c742bf3e491c1818ae",
     server = "google_server",
+    sha1 = "b528df95c7e2fefa2210c0c742bf3e491c1818ae",
 )
 
 maven_jar(
@@ -312,9 +322,8 @@ apple_support_dependencies()
 
 http_archive(
     name = "google_toolbox_for_mac",
-    url = "https://github.com/google/google-toolbox-for-mac/archive/v2.2.1.zip",
+    build_file = "@//third_party:google_toolbox_for_mac.BUILD",
     sha256 = "e3ac053813c989a88703556df4dc4466e424e30d32108433ed6beaec76ba4fdc",
     strip_prefix = "google-toolbox-for-mac-2.2.1",
-    build_file = "@//third_party:google_toolbox_for_mac.BUILD",
+    url = "https://github.com/google/google-toolbox-for-mac/archive/v2.2.1.zip",
 )
-

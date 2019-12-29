@@ -4,7 +4,11 @@
 
 # Images on GPU coming into and out of the graph.
 input_stream: "input_video"
+input_stream: "red"
+input_stream: "green"
+input_stream: "blue"
 output_stream: "output_video"
+
 
 # Throttles the images flowing downstream for flow control. It passes through
 # the very first incoming image unaltered, and waits for
@@ -47,11 +51,14 @@ node: {
   }
 }
 
-# Caches a mask fed back from the previous round of hair segmentation, and upon
-# the arrival of the next input image sends out the cached mask with the
-# timestamp replaced by that of the input image, essentially generating a packet
-# that carries the previous mask. Note that upon the arrival of the very first
-# input image, an empty packet is sent out to jump start the feedback loop.
+# Waits for a mask from the previous round of hair segmentation to be fed back
+# as an input, and caches it. Upon the arrival of an input image, it checks if
+# there is a mask cached, and sends out the mask with the timestamp replaced by
+# that of the input image. This is needed so that the "current image" and the
+# "previous mask" share the same timestamp, and as a result can be synchronized
+# and combined in the subsequent calculator. Note that upon the arrival of the
+# very first input frame, an empty packet is sent out to jump start the feedback
+# loop.
 node {
   calculator: "PreviousLoopbackCalculator"
   input_stream: "MAIN:throttled_input_video"
@@ -74,9 +81,12 @@ node {
 
 # Converts the transformed input image on GPU into an image tensor stored in
 # tflite::gpu::GlBuffer. The zero_center option is set to false to normalize the
-# pixel values to [0.f, 1.f] as opposed to [-1.f, 1.f]. With the
-# max_num_channels option set to 4, all 4 RGBA channels are contained in the
-# image tensor.
+# pixel values to [0.f, 1.f] as opposed to [-1.f, 1.f]. The flip_vertically
+# option is set to true to account for the descrepancy between the
+# representation of the input image (origin at the bottom-left corner, the
+# OpenGL convention) and what the model used in this graph is expecting (origin
+# at the top-left corner). With the max_num_channels option set to 4, all 4 RGBA
+# channels are contained in the image tensor.
 node {
   calculator: "TfLiteConverterCalculator"
   input_stream: "IMAGE_GPU:mask_embedded_input_video"
@@ -84,6 +94,7 @@ node {
   node_options: {
     [type.googleapis.com/mediapipe.TfLiteConverterCalculatorOptions] {
       zero_center: false
+      flip_vertically: false
       max_num_channels: 4
     }
   }
@@ -111,7 +122,7 @@ node {
   input_side_packet: "CUSTOM_OP_RESOLVER:op_resolver"
   node_options: {
     [type.googleapis.com/mediapipe.TfLiteInferenceCalculatorOptions] {
-      model_path: "mediapipe/models/hair_segmentation.tflite"
+      model_path: "hair_segmentation.tflite"
       use_gpu: true
     }
   }
@@ -137,11 +148,22 @@ node {
   }
 }
 
+node {
+calculator:"ColorSliderCalculator"
+input_stream: "red"
+input_stream: "green"
+input_stream: "blue"
+output_stream:"RGB_OUT:out_array"
+}
+
+
+
 # Colors the hair segmentation with the color specified in the option.
 node {
   calculator: "RecolorCalculator"
   input_stream: "IMAGE_GPU:throttled_input_video"
   input_stream: "MASK_GPU:hair_mask"
+  input_stream:"RGB_OUT:out_array"
   output_stream: "IMAGE_GPU:output_video"
   node_options: {
     [type.googleapis.com/mediapipe.RecolorCalculatorOptions] {

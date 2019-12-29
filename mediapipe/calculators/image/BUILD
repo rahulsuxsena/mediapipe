@@ -421,6 +421,18 @@ cc_library(
 )
 
 cc_library(
+    name = "ColorSliderCalculator",
+    srcs = ["ColorSliderCalculator.cc"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//mediapipe/framework:calculator_framework",
+        "//mediapipe/framework/port:ret_check",
+        "//mediapipe/framework/port:status",
+    ],
+    alwayslink = 1,
+)
+
+cc_library(
     name = "scale_image_utils",
     srcs = ["scale_image_utils.cc"],
     hdrs = ["scale_image_utils.h"],
