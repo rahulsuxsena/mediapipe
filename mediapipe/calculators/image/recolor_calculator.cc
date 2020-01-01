@@ -210,12 +210,12 @@ REGISTER_CALCULATOR(RecolorCalculator);
   const auto& input_buffer = input_packet.Get<mediapipe::GpuBuffer>();
   const auto& mask_buffer = mask_packet.Get<mediapipe::GpuBuffer>();
   const auto& rgb_buffer = rgb_packet.Get<std::array<int,3>>();
-//  LOG(INFO) << "Recolor Calculator Runner " <<  rgb_buffer[0] << " " <<rgb_buffer[1]  << "  "<< rgb_buffer[2] << "\n";
+  LOG(INFO) << "Recolor Calculator Runner " <<  rgb_buffer[0] << " " <<rgb_buffer[1]  << "  "<< rgb_buffer[2] << "\n";
 
   my_color[0] = rgb_buffer[0] / 255.0;
   my_color[1] = rgb_buffer[1] / 255.0;
   my_color[2] = rgb_buffer[2] / 255.0;
-//  LOG(INFO) << "Recolor Calculator Runner" <<  my_color[0] << " " <<my_color[1]  << "  "<< my_color[2] << "\n";
+  LOG(INFO) << "Recolor Calculator Runner" <<  my_color[0] << " " <<my_color[1]  << "  "<< my_color[2] << "\n";
 
   auto img_tex = gpu_helper_.CreateSourceTexture(input_buffer);
   auto mask_tex = gpu_helper_.CreateSourceTexture(mask_buffer);

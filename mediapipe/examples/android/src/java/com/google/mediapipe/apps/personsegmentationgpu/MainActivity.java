@@ -1,4 +1,4 @@
-package com.google.mediapipe.apps.hairsegmentationgpu;
+package com.google.mediapipe.apps.personsegmentationgpu;
 
 import android.graphics.SurfaceTexture;
 import android.os.Bundle;
@@ -31,7 +31,7 @@ import com.google.mediapipe.framework.Packet;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
-    private static final String BINARY_GRAPH_NAME = "hairsegmentationgpu.binarypb";
+    private static final String BINARY_GRAPH_NAME = "personsegmentationgpu.binarypb";
     private static final String INPUT_VIDEO_STREAM_NAME = "input_video";
     private static final String OUTPUT_VIDEO_STREAM_NAME = "output_video";
     private static final String RED_INPUT_STREAM ="red";

@@ -208,7 +208,7 @@ REGISTER_CALCULATOR(TfLiteInferenceCalculator);
             cc->Outputs().HasTag("TENSORS_GPU"));
 
   bool use_gpu = false;
-
+  LOG(INFO) << "TfLiteInference:Process1" << std::endl;
   if (cc->Inputs().HasTag("TENSORS"))
     cc->Inputs().Tag("TENSORS").Set<std::vector<TfLiteTensor>>();
 #if !defined(MEDIAPIPE_DISABLE_GPU) && !defined(__EMSCRIPTEN__)
@@ -244,7 +244,7 @@ REGISTER_CALCULATOR(TfLiteInferenceCalculator);
     MP_RETURN_IF_ERROR([MPPMetalHelper updateContract:cc]);
 #endif
   }
-
+  LOG(INFO) << "TfLiteInference:Process2" << std::endl;
   // Assign this calculator's default InputStreamHandler.
   cc->SetInputStreamHandler("FixedSizeInputStreamHandler");
 
@@ -298,23 +298,31 @@ REGISTER_CALCULATOR(TfLiteInferenceCalculator);
     MP_RETURN_IF_ERROR(LoadDelegate(cc));
 #endif  // __EMSCRIPTEN__ || ANDROID
   }
+  LOG(INFO) << "TfLiteInference:Process3" <<std::endl;
   return ::mediapipe::OkStatus();
 }
 
 ::mediapipe::Status TfLiteInferenceCalculator::Process(CalculatorContext* cc) {
   // 1. Receive pre-processed tensor inputs.
   if (gpu_input_) {
+    LOG(INFO) << "TfLiteInference:Process4" << std::endl;
     // Read GPU input into SSBO.
 #if !defined(MEDIAPIPE_DISABLE_GL_COMPUTE)
     const auto& input_tensors =
         cc->Inputs().Tag("TENSORS_GPU").Get<std::vector<GpuTensor>>();
+
+    LOG(INFO) << "TfLiteInference:Process4.1" << std::endl;
     RET_CHECK_EQ(input_tensors.size(), 1);
+
+    LOG(INFO) << "TfLiteInference:Process4.1" << std::endl;
     MP_RETURN_IF_ERROR(gpu_helper_.RunInGlContext(
         [this, &input_tensors]() -> ::mediapipe::Status {
           // Explicit copy input.
           RET_CHECK_CALL(CopyBuffer(input_tensors[0], gpu_data_in_->buffer));
           return ::mediapipe::OkStatus();
         }));
+
+    LOG(INFO) << "TfLiteInference:Process4.1.1" << std::endl;
 #elif defined(MEDIAPIPE_IOS)
     const auto& input_tensors =
         cc->Inputs().Tag("TENSORS_GPU").Get<std::vector<GpuTensor>>();
@@ -348,7 +356,6 @@ REGISTER_CALCULATOR(TfLiteInferenceCalculator);
       }
     }
   }
-
   // 2. Run inference.
   if (gpu_inference_) {
 #if !defined(MEDIAPIPE_DISABLE_GL_COMPUTE)
@@ -422,7 +429,7 @@ REGISTER_CALCULATOR(TfLiteInferenceCalculator);
     cc->Outputs().Tag("TENSORS").Add(output_tensors.release(),
                                      cc->InputTimestamp());
   }
-
+  LOG(INFO) << "TfLiteInference:Process5" << std::endl;
   return ::mediapipe::OkStatus();
 }
 
