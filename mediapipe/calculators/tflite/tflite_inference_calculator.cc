@@ -311,7 +311,7 @@ REGISTER_CALCULATOR(TfLiteInferenceCalculator);
     const auto& input_tensors =
         cc->Inputs().Tag("TENSORS_GPU").Get<std::vector<GpuTensor>>();
 
-    LOG(INFO) << "TfLiteInference:Process4.1" << std::endl;
+    LOG(INFO) << "TfLiteInference:Process4.1" << input_tensors.size() << std::endl;
     RET_CHECK_EQ(input_tensors.size(), 1);
 
     LOG(INFO) << "TfLiteInference:Process4.1" << std::endl;
@@ -434,6 +434,7 @@ REGISTER_CALCULATOR(TfLiteInferenceCalculator);
 }
 
 ::mediapipe::Status TfLiteInferenceCalculator::Close(CalculatorContext* cc) {
+
   if (delegate_) {
     if (gpu_inference_) {
 #if !defined(MEDIAPIPE_DISABLE_GL_COMPUTE)

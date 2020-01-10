@@ -128,6 +128,7 @@ class TfLiteTensorsToSegmentationCalculator : public CalculatorBase {
   int tensor_height_ = 0;
   int tensor_channels_ = 0;
 
+
   bool use_gpu_ = false;
 #if !defined(MEDIAPIPE_DISABLE_GL_COMPUTE)
   mediapipe::GlCalculatorHelper gpu_helper_;
@@ -146,6 +147,7 @@ REGISTER_CALCULATOR(TfLiteTensorsToSegmentationCalculator);
   RET_CHECK(!cc->Outputs().GetTags().empty());
 
   bool use_gpu = false;
+  LOG(INFO) << "TfLiteTensorsToSegmentation: Process1" << std::endl;
 
   // Inputs CPU.
   if (cc->Inputs().HasTag("TENSORS")) {

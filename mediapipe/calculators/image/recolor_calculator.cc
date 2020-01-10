@@ -184,6 +184,7 @@ REGISTER_CALCULATOR(RecolorCalculator);
 }
 
 ::mediapipe::Status RecolorCalculator::Close(CalculatorContext* cc) {
+
 #if defined(__ANDROID__)
   gpu_helper_.RunInGlContext([this] {
     if (program_) glDeleteProgram(program_);
