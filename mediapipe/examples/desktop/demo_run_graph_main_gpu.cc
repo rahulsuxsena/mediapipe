@@ -14,6 +14,7 @@
 //
 // An example of sending OpenCV webcam frames into a MediaPipe graph.
 // This example requires a linux computer and a GPU with EGL support drivers.
+#include <cstdlib>
 
 #include "mediapipe/framework/calculator_framework.h"
 #include "mediapipe/framework/formats/image_frame.h"
@@ -28,10 +29,18 @@
 #include "mediapipe/gpu/gl_calculator_helper.h"
 #include "mediapipe/gpu/gpu_buffer.h"
 #include "mediapipe/gpu/gpu_shared_data_internal.h"
+#include "mediapipe/framework/formats/landmark.pb.h"
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+using namespace std;
 
 constexpr char kInputStream[] = "input_video";
 constexpr char kOutputStream[] = "output_video";
 constexpr char kWindowName[] = "MediaPipe";
+
 
 DEFINE_string(
     calculator_graph_config_file, "",
@@ -75,16 +84,7 @@ DEFINE_string(output_video_path, "",
 
   cv::VideoWriter writer;
   const bool save_video = !FLAGS_output_video_path.empty();
-  if (save_video) {
-    LOG(INFO) << "Prepare video writer.";
-    cv::Mat test_frame;
-    capture.read(test_frame);                    // Consume first frame.
-    capture.set(cv::CAP_PROP_POS_AVI_RATIO, 0);  // Rewind to beginning.
-    writer.open(FLAGS_output_video_path,
-                mediapipe::fourcc('a', 'v', 'c', '1'),  // .mp4
-                capture.get(cv::CAP_PROP_FPS), test_frame.size());
-    RET_CHECK(writer.isOpened());
-  } else {
+  if (!save_video) {
     cv::namedWindow(kWindowName, /*flags=WINDOW_AUTOSIZE*/ 1);
 #if (CV_MAJOR_VERSION >= 3) && (CV_MINOR_VERSION >= 2)
     capture.set(cv::CAP_PROP_FRAME_WIDTH, 640);
@@ -95,11 +95,13 @@ DEFINE_string(output_video_path, "",
 
   LOG(INFO) << "Start running the calculator graph.";
   ASSIGN_OR_RETURN(mediapipe::OutputStreamPoller poller,
-                   graph.AddOutputStreamPoller(kOutputStream));
+                    graph.AddOutputStreamPoller(kOutputStream));
+  ASSIGN_OR_RETURN(mediapipe::OutputStreamPoller multi_hand_landmarks_poller,
+                    graph.AddOutputStreamPoller("multi_hand_landmarks"));
+  
   MP_RETURN_IF_ERROR(graph.StartRun({}));
 
   LOG(INFO) << "Start grabbing and processing frames.";
-  size_t frame_timestamp = 0;
   bool grab_frames = true;
   while (grab_frames) {
     // Capture opencv camera or video frame.
@@ -120,8 +122,10 @@ DEFINE_string(output_video_path, "",
     camera_frame.copyTo(input_frame_mat);
 
     // Prepare and add graph input packet.
+    size_t frame_timestamp_us =
+        (double)cv::getTickCount() / (double)cv::getTickFrequency() * 1e6;
     MP_RETURN_IF_ERROR(
-        gpu_helper.RunInGlContext([&input_frame, &frame_timestamp, &graph,
+        gpu_helper.RunInGlContext([&input_frame, &frame_timestamp_us, &graph,
                                    &gpu_helper]() -> ::mediapipe::Status {
           // Convert ImageFrame to GpuBuffer.
           auto texture = gpu_helper.CreateSourceTexture(*input_frame.get());
@@ -131,7 +135,7 @@ DEFINE_string(output_video_path, "",
           // Send GPU image packet into the graph.
           MP_RETURN_IF_ERROR(graph.AddPacketToInputStream(
               kInputStream, mediapipe::Adopt(gpu_frame.release())
-                                .At(mediapipe::Timestamp(frame_timestamp++))));
+                                .At(mediapipe::Timestamp(frame_timestamp_us))));
           return ::mediapipe::OkStatus();
         }));
 
@@ -139,6 +143,24 @@ DEFINE_string(output_video_path, "",
     mediapipe::Packet packet;
     if (!poller.Next(&packet)) break;
     std::unique_ptr<mediapipe::ImageFrame> output_frame;
+
+    mediapipe::Packet multi_hand_landmarks_packet;
+    if (!multi_hand_landmarks_poller.Next(&multi_hand_landmarks_packet)) break;
+    // const auto& multi_hand_landmarks = multi_hand_landmarks_packet.Get<std::vector<std::vector<mediapipe::NormalizedLandmark>>>();
+    const auto& multi_hand_landmarks = multi_hand_landmarks_packet.Get<std::vector<mediapipe::NormalizedLandmarkList>>();
+    // const auto& multi_hand_landmarks = multi_hand_landmarks_packet.Get<std::vector<std::vector<mediapipe::NormalizedLandmark>>>();
+
+    int hand_index = 0;
+    for (const auto &hand_landmarks : multi_hand_landmarks)
+    {
+      int landmark_index = 0;
+      for (const auto &landmark : hand_landmarks.landmark())
+      {
+        std::cout << "[Hand<" << hand_index << ">] Landmark<" << landmark_index++ << ">: (" << landmark.x() << ", " << landmark.y() << ", " << landmark.z() << ")\n";
+      }
+      std::cout << "\n";
+      ++hand_index;
+    }
 
     // Convert GpuBuffer to ImageFrame.
     MP_RETURN_IF_ERROR(gpu_helper.RunInGlContext(
@@ -163,6 +185,13 @@ DEFINE_string(output_video_path, "",
     cv::Mat output_frame_mat = mediapipe::formats::MatView(output_frame.get());
     cv::cvtColor(output_frame_mat, output_frame_mat, cv::COLOR_RGB2BGR);
     if (save_video) {
+      if (!writer.isOpened()) {
+        LOG(INFO) << "Prepare video writer.";
+        writer.open(FLAGS_output_video_path,
+                    mediapipe::fourcc('a', 'v', 'c', '1'),  // .mp4
+                    capture.get(cv::CAP_PROP_FPS), output_frame_mat.size());
+        RET_CHECK(writer.isOpened());
+      }
       writer.write(output_frame_mat);
     } else {
       cv::imshow(kWindowName, output_frame_mat);
@@ -184,8 +213,9 @@ int main(int argc, char** argv) {
   ::mediapipe::Status run_status = RunMPPGraph();
   if (!run_status.ok()) {
     LOG(ERROR) << "Failed to run the graph: " << run_status.message();
+    return EXIT_FAILURE;
   } else {
     LOG(INFO) << "Success!";
   }
-  return 0;
+  return EXIT_SUCCESS;
 }
