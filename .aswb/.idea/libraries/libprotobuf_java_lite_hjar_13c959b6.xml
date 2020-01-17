@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="libprotobuf_java_lite-hjar_13c959b6">
-    <CLASSES>
-      <root url="jar://$USER_HOME$/.cache/bazel/_bazel_prince/2c0029220fda8bf56e7d1a5c76230504/execroot/mediapipe/bazel-out/android-armeabi-v7a-fastbuild/bin/external/com_google_protobuf_javalite/libprotobuf_java_lite-hjar.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

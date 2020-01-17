@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="concurrent-futures-1.0.0-alpha03_3ae326e6">
-    <CLASSES>
-      <root url="jar://$USER_HOME$/.cache/bazel/_bazel_prince/2c0029220fda8bf56e7d1a5c76230504/execroot/mediapipe/external/androidx_concurrent_futures/jar/concurrent-futures-1.0.0-alpha03.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
