@@ -39,9 +39,9 @@ cc_library(
     deps = [
         ":desktop_offline_calculators",
         "//mediapipe/calculators/core:merge_calculator",
-        "//mediapipe/graphs/hand_tracking/subgraphs:hand_detection_cpu",
-        "//mediapipe/graphs/hand_tracking/subgraphs:hand_landmark_cpu",
-        "//mediapipe/graphs/hand_tracking/subgraphs:renderer_cpu",
+        "//mediapipe/graphs/sign_language_companion/subgraphs:hand_detection_cpu",
+        "//mediapipe/graphs/sign_language_companion/subgraphs:hand_landmark_cpu",
+        "//mediapipe/graphs/sign_language_companion/subgraphs:renderer_cpu",
     ],
 )
 
@@ -52,9 +52,9 @@ cc_library(
         "//mediapipe/calculators/core:gate_calculator",
         "//mediapipe/calculators/core:merge_calculator",
         "//mediapipe/calculators/core:previous_loopback_calculator",
-        "//mediapipe/graphs/hand_tracking/subgraphs:hand_detection_gpu",
-        "//mediapipe/graphs/hand_tracking/subgraphs:hand_landmark_gpu",
-        "//mediapipe/graphs/hand_tracking/subgraphs:renderer_gpu",
+        "//mediapipe/graphs/sign_language_companion/subgraphs:hand_detection_gpu",
+        "//mediapipe/graphs/sign_language_companion/subgraphs:hand_landmark_gpu",
+        "//mediapipe/graphs/sign_language_companion/subgraphs:renderer_gpu",
     ],
 )
 
@@ -71,9 +71,9 @@ cc_library(
         ":desktop_offline_calculators",
         "//mediapipe/calculators/util:association_norm_rect_calculator",
         "//mediapipe/calculators/util:collection_has_min_size_calculator",
-        "//mediapipe/graphs/hand_tracking/subgraphs:multi_hand_detection_cpu",
-        "//mediapipe/graphs/hand_tracking/subgraphs:multi_hand_landmark_cpu",
-        "//mediapipe/graphs/hand_tracking/subgraphs:multi_hand_renderer_cpu",
+        "//mediapipe/graphs/sign_language_companion/subgraphs:multi_hand_detection_cpu",
+        "//mediapipe/graphs/sign_language_companion/subgraphs:multi_hand_landmark_cpu",
+        "//mediapipe/graphs/sign_language_companion/subgraphs:multi_hand_renderer_cpu",
     ],
 )
 
@@ -85,9 +85,10 @@ cc_library(
         "//mediapipe/calculators/core:previous_loopback_calculator",
         "//mediapipe/calculators/util:association_norm_rect_calculator",
         "//mediapipe/calculators/util:collection_has_min_size_calculator",
-        "//mediapipe/graphs/hand_tracking/subgraphs:multi_hand_detection_gpu",
         "//mediapipe/graphs/hand_tracking/subgraphs:multi_hand_landmark_gpu",
-        "//mediapipe/graphs/hand_tracking/subgraphs:multi_hand_renderer_gpu",
+        #        "//mediapipe/graphs/sign_language_companion/subgraphs:multi_hand_landmark_gpu",
+        "//mediapipe/graphs/sign_language_companion/subgraphs:multi_hand_detection_gpu",
+        "//mediapipe/graphs/sign_language_companion/subgraphs:multi_hand_renderer_gpu",
     ],
 )
 
@@ -102,8 +103,8 @@ cc_library(
     name = "detection_mobile_calculators",
     deps = [
         "//mediapipe/calculators/core:flow_limiter_calculator",
-        "//mediapipe/graphs/hand_tracking/subgraphs:hand_detection_gpu",
-        "//mediapipe/graphs/hand_tracking/subgraphs:renderer_gpu",
+        "//mediapipe/graphs/sign_language_companion/subgraphs:hand_detection_gpu",
+        "//mediapipe/graphs/sign_language_companion/subgraphs:renderer_gpu",
     ],
 )
 

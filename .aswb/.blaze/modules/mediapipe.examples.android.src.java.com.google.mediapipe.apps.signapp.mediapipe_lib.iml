@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.system.id="Blaze" type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="android" name="Android">
+      <configuration>
+        <option name="ALLOW_USER_CONFIGURATION" value="false" />
+        <option name="MANIFEST_FILE_RELATIVE_PATH" value="" />
+        <option name="RES_FOLDER_RELATIVE_PATH" value="" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/../../../mediapipe/examples/android/src/java/com/google/mediapipe/apps/signapp/res" />
+        <option name="TEST_RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/../../../mediapipe/examples/android/src/java/com/google/mediapipe/apps/signapp/res" />
+        <option name="ASSETS_FOLDER_RELATIVE_PATH" value="" />
+        <option name="PROJECT_TYPE" value="1" />
+        <option name="ENABLE_SOURCES_AUTOGENERATION" value="false" />
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../../mediapipe/examples/android/src/java/com/google/mediapipe/apps/signapp/AndroidManifest.xml">
+      <sourceFolder url="file://$MODULE_DIR$/../../../mediapipe/examples/android/src/java/com/google/mediapipe/apps/signapp/AndroidManifest.xml" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../../mediapipe/examples/android/src/java/com/google/mediapipe/apps/signapp/res">
+      <sourceFolder url="file://$MODULE_DIR$/../../../mediapipe/examples/android/src/java/com/google/mediapipe/apps/signapp/res" type="java-resource" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name=".workspace" />
+    <orderEntry type="library" name="activity-1.0.0-rc01_1e6ebaa2" level="project" />
+    <orderEntry type="library" name="appcompat-1.1.0-rc01_b38223d9" level="project" />
+    <orderEntry type="library" name="appcompat-resources-1.1.0-rc01_e0278701" level="project" />
+    <orderEntry type="library" name="asynclayoutinflater-1.0.0_88efc6e1" level="project" />
+    <orderEntry type="library" name="camera-camera2-1.0.0-alpha06_813f2054" level="project" />
+    <orderEntry type="library" name="camera-core-1.0.0-alpha06_a5dd1e32" level="project" />
+    <orderEntry type="library" name="cardview-1.0.0-rc01_f9b5e7e2" level="project" />
+    <orderEntry type="library" name="constraintlayout-1.1.3_fb0b47e1" level="project" />
+    <orderEntry type="library" name="coordinatorlayout-1.0.0_6e74fe73" level="project" />
+    <orderEntry type="library" name="core-1.1.0_1537a2de" level="project" />
+    <orderEntry type="library" name="core-runtime-2.1.0_405487a1" level="project" />
+    <orderEntry type="library" name="cursoradapter-1.0.0_1a3f1cf1" level="project" />
+    <orderEntry type="library" name="customview-1.0.0_8ee066bd" level="project" />
+    <orderEntry type="library" name="documentfile-1.0.0_ef22421d" level="project" />
+    <orderEntry type="library" name="drawerlayout-1.0.0_ed3d309d" level="project" />
+    <orderEntry type="library" name="exifinterface-1.0.0_bd2f96d1" level="project" />
+    <orderEntry type="library" name="fragment-1.1.0-rc01_5b185a61" level="project" />
+    <orderEntry type="library" name="interpolator-1.0.0_8a99c01d" level="project" />
+    <orderEntry type="library" name="legacy-support-core-ui-1.0.0_92eb7c54" level="project" />
+    <orderEntry type="library" name="legacy-support-core-utils-1.0.0_81cac4bd" level="project" />
+    <orderEntry type="library" name="legacy-support-v4-1.0.0_64397df8" level="project" />
+    <orderEntry type="library" name="lifecycle-livedata-2.1.0_601aa59e" level="project" />
+    <orderEntry type="library" name="lifecycle-livedata-core-2.1.0_39cc22be" level="project" />
+    <orderEntry type="library" name="lifecycle-runtime-2.1.0-rc01_b3366cff" level="project" />
+    <orderEntry type="library" name="lifecycle-viewmodel-2.1.0-rc01_db356db3" level="project" />
+    <orderEntry type="library" name="loader-1.0.0_cae6049d" level="project" />
+    <orderEntry type="library" name="localbroadcastmanager-1.0.0_4797876d" level="project" />
+    <orderEntry type="library" name="material-1.0.0-rc01_a4fad2e4" level="project" />
+    <orderEntry type="library" name="media-1.0.0_efdefb87" level="project" />
+    <orderEntry type="library" name="print-1.0.0_34d7a0d9" level="project" />
+    <orderEntry type="library" name="recyclerview-1.1.0-beta02_adec3da1" level="project" />
+    <orderEntry type="library" name="savedstate-1.0.0-rc01_2261182" level="project" />
+    <orderEntry type="library" name="slidingpanelayout-1.0.0_f55fc5bf" level="project" />
+    <orderEntry type="library" name="swiperefreshlayout-1.0.0_a837479d" level="project" />
+    <orderEntry type="library" name="transition-1.0.0-rc01_121cce62" level="project" />
+    <orderEntry type="library" name="vectordrawable-1.1.0-rc01_a9a4c9c1" level="project" />
+    <orderEntry type="library" name="vectordrawable-animated-1.1.0-rc01_5b45123f" level="project" />
+    <orderEntry type="library" name="versionedparcelable-1.1.0_31c0e9f4" level="project" />
+    <orderEntry type="library" name="viewpager-1.0.0_f8370a3b" level="project" />
+  </component>
+</module>
