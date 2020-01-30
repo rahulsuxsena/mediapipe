@@ -14,15 +14,19 @@
 
 package com.google.mediapipe.apps.signapp;
 
+import android.graphics.Color;
 import android.graphics.SurfaceTexture;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Size;
+import android.view.Gravity;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
 import com.google.mediapipe.formats.proto.LandmarkProto.NormalizedLandmark;
 import com.google.mediapipe.formats.proto.LandmarkProto.NormalizedLandmarkList;
 import com.google.mediapipe.components.CameraHelper;
@@ -74,10 +78,18 @@ public class MainActivity extends AppCompatActivity {
   // Handles camera access via the {@link CameraX} Jetpack support library.
   private CameraXPreviewHelper cameraHelper;
 
+  private TextView gesture;
+  private List<NormalizedLandmarkList> multiHandLandmarkz;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+
+    gesture = findViewById(R.id.gesture);
+    gesture.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
+    gesture.setTextColor(Color.RED);
+
 
     previewDisplayView = new SurfaceView(this);
     setupPreviewDisplayView();
@@ -102,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
           Log.d(TAG, "Received multi-hand landmarks packet.");
           List<NormalizedLandmarkList> multiHandLandmarks =
               PacketGetter.getProtoVector(packet, NormalizedLandmarkList.parser());
+          multiHandLandmarkz = multiHandLandmarks;
           Log.d(
               TAG,
               "[TS:"
@@ -109,7 +122,9 @@ public class MainActivity extends AppCompatActivity {
                   + "] "
 //                  + getMultiHandLandmarksDebugString(multiHandLandmarks));
                   + assessHandLandmark(multiHandLandmarks));
+
         });
+
 
     PermissionHelper.checkAndRequestCameraPermissions(this);
   }
@@ -301,14 +316,19 @@ public class MainActivity extends AppCompatActivity {
       ++handIndex;
     }
 
+    setText(gesture, result_gesture);
 
-
-
-
-
-   return result_gesture;
+    return result_gesture;
   }
 
+  private void setText(final TextView text,final String value){
+    runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        text.setText(value);
+      }
+    });
+  }
 
 
 }
