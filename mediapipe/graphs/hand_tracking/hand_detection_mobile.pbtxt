@@ -36,6 +36,16 @@ node {
   output_stream: "NORM_RECT:hand_rect_from_palm_detections"
 }
 
+# Subgraph that detections hands (see hand_detection_gpu.pbtxt).
+node {
+  calculator: "HandGestureSubgraph"
+  input_stream: "throttled_input_video"
+  input_stream: "NORM_RECT:hand_rect_from_palm_detections"
+  output_stream: "RENDER_DATA:gesture_render_data"
+}
+
+
+
 # Converts detections to drawing primitives for annotation overlay.
 node {
   calculator: "DetectionsToRenderDataCalculator"
@@ -67,7 +77,6 @@ node {
 node {
   calculator: "AnnotationOverlayCalculator"
   input_stream: "INPUT_FRAME_GPU:throttled_input_video"
-  input_stream: "detection_render_data"
-  input_stream: "rect_render_data"
+  input_stream: "gesture_render_data"
   output_stream: "OUTPUT_FRAME_GPU:output_video"
 }

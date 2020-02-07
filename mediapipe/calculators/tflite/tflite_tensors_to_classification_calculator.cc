@@ -15,6 +15,7 @@
 #include <algorithm>
 #include <unordered_map>
 #include <vector>
+#include <android/log.h>
 
 #include "absl/strings/str_format.h"
 #include "absl/types/span.h"
@@ -143,10 +144,14 @@ REGISTER_CALCULATOR(TfLiteTensorsToClassificationCalculator);
     Classification* classification = classification_list->add_classification();
     classification->set_index(i);
     classification->set_score(raw_scores[i]);
+
+    LOG(INFO) << i << " - " << raw_scores[i] << " : " ;
+
     if (label_map_loaded_) {
       classification->set_label(label_map_[i]);
     }
   }
+  LOG(INFO) << " \n ";
 
   // Note that partial_sort will raise error when top_k_ >
   // classification_list->classification_size().
@@ -163,7 +168,11 @@ REGISTER_CALCULATOR(TfLiteTensorsToClassificationCalculator);
     // Resizes the underlying list to have only top_k_ classifications.
     raw_classification_list->DeleteSubrange(
         top_k_, raw_classification_list->size() - top_k_);
+
   }
+
+  LOG(INFO) << "After classification \n ";
+
   cc->Outputs()
       .Tag("CLASSIFICATIONS")
       .Add(classification_list.release(), cc->InputTimestamp());

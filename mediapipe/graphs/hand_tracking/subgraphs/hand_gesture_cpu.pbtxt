@@ -1,0 +1,85 @@
+type: "HandGestureSubgraph"
+
+input_stream: "input_video"
+input_stream: "hand_rect"
+output_stream: "gesture_render_data"
+
+
+# Crops the rectangle that contains a hand from the input image.
+node {
+  calculator: "ImageCroppingCalculator"
+  input_stream: "IMAGE_GPU:input_video"
+  input_stream: "NORM_RECT:hand_rect"
+  output_stream: "IMAGE_GPU:hand_image"
+}
+
+# Transforms the input image on GPU to a 320x320 image. To scale the image, by
+# default it uses the STRETCH scale mode that maps the entire input image to the
+# entire transformed image. As a result, image aspect ratio may be changed and
+# objects in the image may be deformed (stretched or squeezed), but the object
+# detection model used in this graph is agnostic to that deformation.
+node: {
+  calculator: "ImageTransformationCalculator"
+  input_stream: "IMAGE_GPU:hand_image"
+  output_stream: "IMAGE_GPU:transformed_input_video"
+  node_options: {
+    [type.googleapis.com/mediapipe.ImageTransformationCalculatorOptions] {
+      output_width: 150
+      output_height: 150
+    }
+  }
+}
+
+# Converts the transformed input image on GPU into an image tensor stored as a
+# TfLiteTensor.
+node {
+  calculator: "TfLiteConverterCalculator"
+  input_stream: "IMAGE_GPU:transformed_input_video"
+  output_stream: "TENSORS_GPU:image_tensor"
+}
+
+# Runs a TensorFlow Lite model on GPU that takes an image tensor and outputs a
+# vector of tensors representing, for instance, detection boxes/keypoints and
+# scores.
+node {
+  calculator: "TfLiteInferenceCalculator"
+  input_stream: "TENSORS_GPU:image_tensor"
+  output_stream: "TENSORS:detection_tensors"
+  node_options: {
+    [type.googleapis.com/mediapipe.TfLiteInferenceCalculatorOptions] {
+      model_path: "mediapipe/models/rps/rps_150x150.20191024.1640.tflite"
+    }
+  }
+}
+node {
+calculator: "TfLiteTensorsToClassificationCalculator"
+input_stream: "TENSORS:detection_tensors"
+output_stream: "CLASSIFICATIONS:classifications"
+node_options: {
+[type.googleapis.com/mediapipe.TfLiteTensorsToClassificationCalculatorOptions] {
+min_score_threshold: 0.0
+top_k: 1
+label_map_path: "mediapipe/models/rps/rps_labelmap.txt"
+}
+}
+}
+
+
+node {
+   calculator: "LabelsToRenderDataCalculator"
+   input_stream: "CLASSIFICATIONS:classifications"
+   output_stream: "RENDER_DATA:gesture_render_data"
+   options {
+     [LabelsToRenderDataCalculatorOptions.ext] {
+       color { r: 255 g: 0 b: 0 }
+       color { r: 0 g: 255 b: 0 }
+       color { r: 0 g: 0 b: 255 }
+       thickness: 2.0
+       font_height_px: 20
+       max_num_labels: 3
+       font_face: 1
+       location: TOP_LEFT
+     }
+   }
+}
+

@@ -64,7 +64,7 @@ class LabelsToRenderDataCalculator : public CalculatorBase {
   ::mediapipe::Status Process(CalculatorContext* cc) override;
 
  private:
-  LabelsToRenderDataCalculatorOptions options_;
+  ::mediapipe::LabelsToRenderDataCalculatorOptions options_;
   int num_colors_ = 0;
   int video_width_ = 0;
   int video_height_ = 0;

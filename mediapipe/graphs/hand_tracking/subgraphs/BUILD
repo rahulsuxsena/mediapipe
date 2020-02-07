@@ -147,6 +147,30 @@ mediapipe_simple_subgraph(
 )
 
 mediapipe_simple_subgraph(
+    name = "hand_gesture_gpu",
+    graph = "hand_gesture_gpu.pbtxt",
+    register_as = "HandGestureSubgraph",
+    deps = [
+        "//mediapipe/calculators/image:image_cropping_calculator",
+        "//mediapipe/calculators/image:image_properties_calculator",
+        "//mediapipe/calculators/image:image_transformation_calculator",
+        "//mediapipe/calculators/tflite:ssd_anchors_calculator",
+        "//mediapipe/calculators/tflite:tflite_converter_calculator",
+        "//mediapipe/calculators/tflite:tflite_custom_op_resolver_calculator",
+        "//mediapipe/calculators/tflite:tflite_inference_calculator",
+        "//mediapipe/calculators/tflite:tflite_tensors_to_classification_calculator",
+        "//mediapipe/calculators/tflite:tflite_tensors_to_detections_calculator",
+        "//mediapipe/calculators/util:detection_label_id_to_text_calculator",
+        "//mediapipe/calculators/util:detection_letterbox_removal_calculator",
+        "//mediapipe/calculators/util:detections_to_rects_calculator",
+        "//mediapipe/calculators/util:labels_to_render_data_calculator",
+        "//mediapipe/calculators/util:non_max_suppression_calculator",
+        "//mediapipe/calculators/util:rect_transformation_calculator",
+        "//mediapipe/gpu:gpu_buffer_to_image_frame_calculator",
+    ],
+)
+
+mediapipe_simple_subgraph(
     name = "multi_hand_detection_gpu",
     graph = "multi_hand_detection_gpu.pbtxt",
     register_as = "MultiHandDetectionSubgraph",

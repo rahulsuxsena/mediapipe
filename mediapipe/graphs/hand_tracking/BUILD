@@ -103,6 +103,7 @@ cc_library(
     deps = [
         "//mediapipe/calculators/core:flow_limiter_calculator",
         "//mediapipe/graphs/hand_tracking/subgraphs:hand_detection_gpu",
+        "//mediapipe/graphs/hand_tracking/subgraphs:hand_gesture_gpu",
         "//mediapipe/graphs/hand_tracking/subgraphs:renderer_gpu",
     ],
 )
