@@ -45,8 +45,8 @@ node: {
   output_stream: "IMAGE_GPU:transformed_input_video"
   node_options: {
     [type.googleapis.com/mediapipe.ImageTransformationCalculatorOptions] {
-      output_width: 128
-      output_height: 128
+      output_width: 256
+      output_height: 256
       scale_mode: FIT
     }
   }
@@ -96,7 +96,7 @@ node {
     [type.googleapis.com/mediapipe.TfLiteConverterCalculatorOptions] {
       zero_center: false
       flip_vertically: false
-      max_num_channels: 3
+      max_num_channels: 4
     }
   }
 }
@@ -123,7 +123,7 @@ node {
   input_side_packet: "CUSTOM_OP_RESOLVER:op_resolver"
   node_options: {
     [type.googleapis.com/mediapipe.TfLiteInferenceCalculatorOptions] {
-      model_path: "person_segmentation.tflite"
+      model_path: "munet_mnv3_wm05.tflite"
       use_gpu: true
     }
   }
@@ -140,8 +140,8 @@ node {
   output_stream: "MASK_GPU:hair_mask"
   node_options: {
     [type.googleapis.com/mediapipe.TfLiteTensorsToSegmentationCalculatorOptions] {
-      tensor_width: 128
-      tensor_height: 128
+      tensor_width: 256
+      tensor_height: 256
       tensor_channels: 2
       combine_with_previous_ratio: 0.9
       output_layer_index: 1

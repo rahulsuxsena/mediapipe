@@ -471,6 +471,7 @@ cc_library(
         ],
         "//mediapipe:android": [
             "@org_tensorflow//tensorflow/core:android_tensorflow_lib_lite_nortti_lite_protos",
+            #            "@org_tensorflow//tensorflow/core:core",
         ],
         "//mediapipe:ios": [
             "@org_tensorflow//tensorflow/core:ios_tensorflow_lib",

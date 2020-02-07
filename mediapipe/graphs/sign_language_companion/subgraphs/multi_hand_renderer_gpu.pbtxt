@@ -131,6 +131,7 @@ node {
   output_stream: "ITERABLE:multi_hand_landmarks_render_data"
 }
 
+
 # Draws annotations and overlays them on top of the input images. Consumes
 # a vector of RenderData objects and draws each of them on the input frame.
 node {
