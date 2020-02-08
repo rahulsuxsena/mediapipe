@@ -78,5 +78,6 @@ node {
   calculator: "AnnotationOverlayCalculator"
   input_stream: "INPUT_FRAME_GPU:throttled_input_video"
   input_stream: "gesture_render_data"
+  input_stream: "rect_render_data"
   output_stream: "OUTPUT_FRAME_GPU:output_video"
 }

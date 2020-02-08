@@ -86,11 +86,11 @@ node {
    options {
      [mediapipe.LabelsToRenderDataCalculatorOptions.ext] {
        color { r: 255 g: 0 b: 0 }
-       color { r: 255 g: 0 b: 0 }
-       color { r: 255 g: 0 b: 0 }
-       thickness: 5.0
-       font_height_px: 5
-       max_num_labels: 3
+       color { r: 0 g: 255 b: 0 }
+       color { r: 0 g: 0 b: 255 }
+       thickness: 20.0
+       font_height_px: 100
+       max_num_labels: 1
        font_face: 1
        location: TOP_LEFT
      }
