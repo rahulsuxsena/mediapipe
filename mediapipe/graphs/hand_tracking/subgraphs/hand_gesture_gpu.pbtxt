@@ -1,7 +1,7 @@
 type: "HandGestureSubgraph"
 
-input_stream: "throttled_input_video"
-input_stream: "NORM_RECT:hand_rect_from_palm_detections"
+input_stream: "IMAGE_GPU:throttled_input_video"
+input_stream: "NORM_RECT:hand_rect"
 output_stream: "CLASSIFICATIONS:classifications"
 
 
@@ -9,7 +9,7 @@ output_stream: "CLASSIFICATIONS:classifications"
 node {
   calculator: "ImageCroppingCalculator"
   input_stream: "IMAGE_GPU:throttled_input_video"
-  input_stream: "NORM_RECT:hand_rect_from_palm_detections"
+  input_stream: "NORM_RECT:hand_rect"
   output_stream: "IMAGE_GPU:hand_image"
 }
 

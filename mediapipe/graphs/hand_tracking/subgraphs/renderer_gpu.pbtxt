@@ -4,6 +4,7 @@ type: "RendererSubgraph"
 
 input_stream: "IMAGE:input_image"
 input_stream: "DETECTIONS:detections"
+input_stream: "CLASSIFICATIONS:classifications"
 input_stream: "LANDMARKS:landmarks"
 input_stream: "NORM_RECT:rect"
 output_stream: "IMAGE:output_image"
@@ -20,6 +21,25 @@ node {
     }
   }
 }
+
+node {
+   calculator: "LabelsToRenderDataCalculator"
+   input_stream: "CLASSIFICATIONS:classifications"
+   output_stream: "RENDER_DATA:gesture_render_data"
+   options {
+     [mediapipe.LabelsToRenderDataCalculatorOptions.ext] {
+       color { r: 255 g: 0 b: 0 }
+       color { r: 255 g: 0 b: 0 }
+       color { r: 255 g: 0 b: 0 }
+       thickness: 5.0
+       font_height_px: 100
+       max_num_labels: 1
+       font_face: 1
+       location: TOP_LEFT
+     }
+   }
+}
+
 
 # Converts landmarks to drawing primitives for annotation overlay.
 node {
@@ -97,6 +117,7 @@ node {
   input_stream: "INPUT_FRAME_GPU:input_image"
   input_stream: "detection_render_data"
   input_stream: "landmark_render_data"
+  input_stream: "gesture_render_data"
   input_stream: "rect_render_data"
   output_stream: "OUTPUT_FRAME_GPU:output_image"
 }

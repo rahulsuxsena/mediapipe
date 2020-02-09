@@ -111,12 +111,24 @@ node {
   output_stream: "hand_rect"
 }
 
+
+# Subgraph that does gesture hands (see hand_gesture_gpu.pbtxt).
+node {
+  calculator: "HandGestureSubgraph"
+  input_stream: "IMAGE_GPU:throttled_input_video"
+  input_stream: "NORM_RECT:hand_rect"
+  output_stream: "CLASSIFICATIONS:classifications"
+}
+
+
+
 # Subgraph that renders annotations and overlays them on top of the input
 # images (see renderer_gpu.pbtxt).
 node {
   calculator: "RendererSubgraph"
   input_stream: "IMAGE:throttled_input_video"
   input_stream: "LANDMARKS:hand_landmarks"
+  input_stream: "CLASSIFICATIONS:classifications"
   input_stream: "NORM_RECT:hand_rect"
   input_stream: "DETECTIONS:palm_detections"
   output_stream: "IMAGE:output_video"

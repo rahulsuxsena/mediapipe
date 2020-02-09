@@ -280,12 +280,12 @@ maven_jar(
 # You may run setup_android.sh to install Android SDK and NDK.
 android_ndk_repository(
     name = "androidndk",
-    path = "/Users/amanarora/Library/Android/sdk/ndk/21.0.6113669",
+    path = "/home/prince/Android/Sdk/ndk-bundle/android-ndk-r18b",
 )
 
 android_sdk_repository(
     name = "androidsdk",
-    path = "/Users/amanarora/Library/Android/sdk",
+    path = "/home/prince/Android/Sdk",
 )
 
 # iOS basic build deps.
@@ -338,8 +338,3 @@ http_archive(
         "https://github.com/bazelbuild/rules_java/archive/d7bf804c8731edd232cb061cb2a9fe003a85d8ee.tar.gz",
     ],
 )
-
-
-
-
-

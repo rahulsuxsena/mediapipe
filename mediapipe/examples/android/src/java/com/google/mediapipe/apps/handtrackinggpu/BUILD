@@ -69,6 +69,8 @@ android_library(
         ":model",
         "//mediapipe/models:palm_detection.tflite",
         "//mediapipe/models:palm_detection_labelmap.txt",
+        "//mediapipe/models:rps_150x150.20191024.1640.tflite",
+        "//mediapipe/models:rps_labelmap.txt",
     ],
     assets_dir = "",
     manifest = "AndroidManifest.xml",
