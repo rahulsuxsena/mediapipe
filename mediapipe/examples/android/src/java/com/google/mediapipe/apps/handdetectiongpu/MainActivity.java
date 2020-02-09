@@ -16,19 +16,24 @@ package com.google.mediapipe.apps.handdetectiongpu;
 
 import android.graphics.SurfaceTexture;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
+import android.util.Log;
 import android.util.Size;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.mediapipe.components.CameraHelper;
 import com.google.mediapipe.components.CameraXPreviewHelper;
 import com.google.mediapipe.components.ExternalTextureConverter;
 import com.google.mediapipe.components.FrameProcessor;
 import com.google.mediapipe.components.PermissionHelper;
 import com.google.mediapipe.framework.AndroidAssetUtil;
+import com.google.mediapipe.framework.PacketGetter;
 import com.google.mediapipe.glutil.EglManager;
+import com.google.protobuf.InvalidProtocolBufferException;
 
 /** Main activity of MediaPipe example apps. */
 public class MainActivity extends AppCompatActivity {
@@ -37,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
   private static final String BINARY_GRAPH_NAME = "handdetectiongpu.binarypb";
   private static final String INPUT_VIDEO_STREAM_NAME = "input_video";
   private static final String OUTPUT_VIDEO_STREAM_NAME = "output_video";
+  private static final String OUTPUT_CLASSIFICATIONS = "classifications";
   private static final CameraHelper.CameraFacing CAMERA_FACING = CameraHelper.CameraFacing.FRONT;
 
   // Flips the camera-preview frames vertically before sending them into FrameProcessor to be
@@ -88,9 +94,49 @@ public class MainActivity extends AppCompatActivity {
             BINARY_GRAPH_NAME,
             INPUT_VIDEO_STREAM_NAME,
             OUTPUT_VIDEO_STREAM_NAME);
+    processor.addPacketCallback(OUTPUT_CLASSIFICATIONS, packet -> {
+      byte[] protos = PacketGetter.getProtoBytes(packet);
+      try {
+        ClassificationProto.ClassificationList classifications = ClassificationProto.ClassificationList.parseFrom(protos);
+        if (classifications == null) {
+          Log.d(TAG, "[TS:" + packet.getTimestamp() + "] No Classifications.");
+          return;
+        }
+        Log.d(
+                TAG,
+                "[TS:"
+                        + packet.getTimestamp()
+                        + "] #Classifications: "
+                        + classifications.getClassificationCount());
+        Log.d(TAG, getClassificationsDebugString(classifications));
+      } catch (InvalidProtocolBufferException e) {
+        Log.e(TAG, "Couldn't Exception received - " + e);
+        return;
+      }
+
+    });
     processor.getVideoSurfaceOutput().setFlipY(FLIP_FRAMES_VERTICALLY);
 
     PermissionHelper.checkAndRequestCameraPermissions(this);
+  }
+
+  private static String getClassificationsDebugString(ClassificationProto.ClassificationList classifications) {
+    int classificationIndex = 0;
+    String classificationString = "";
+    for (ClassificationProto.Classification classification : classifications.getClassificationList()) {
+      classificationString +=
+              "\t\tClassification["
+                      + classificationIndex
+                      + "]: ("
+                      + classification.getIndex()
+                      + ", "
+                      + classification.getScore()
+                      + ", "
+                      + classification.getLabel()
+                      + ")\n";
+      ++classificationIndex;
+    }
+    return classificationString;
   }
 
   @Override

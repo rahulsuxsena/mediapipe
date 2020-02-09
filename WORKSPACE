@@ -280,12 +280,12 @@ maven_jar(
 # You may run setup_android.sh to install Android SDK and NDK.
 android_ndk_repository(
     name = "androidndk",
-    path = "/home/prince/Android/Sdk/ndk-bundle/android-ndk-r18b",
+    path = "/Users/amanarora/Library/Android/sdk/ndk/21.0.6113669",
 )
 
 android_sdk_repository(
     name = "androidsdk",
-    path = "/home/prince/Android/Sdk",
+    path = "/Users/amanarora/Library/Android/sdk",
 )
 
 # iOS basic build deps.
@@ -327,3 +327,19 @@ http_archive(
     strip_prefix = "google-toolbox-for-mac-2.2.1",
     url = "https://github.com/google/google-toolbox-for-mac/archive/v2.2.1.zip",
 )
+
+# rules_java defines rules for generating Java code from Protocol Buffers.
+http_archive(
+    name = "rules_java",
+    sha256 = "ccf00372878d141f7d5568cedc4c42ad4811ba367ea3e26bc7c43445bbc52895",
+    strip_prefix = "rules_java-d7bf804c8731edd232cb061cb2a9fe003a85d8ee",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_java/archive/d7bf804c8731edd232cb061cb2a9fe003a85d8ee.tar.gz",
+        "https://github.com/bazelbuild/rules_java/archive/d7bf804c8731edd232cb061cb2a9fe003a85d8ee.tar.gz",
+    ],
+)
+
+
+
+
+

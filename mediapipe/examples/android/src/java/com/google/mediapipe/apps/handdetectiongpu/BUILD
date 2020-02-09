@@ -61,6 +61,7 @@ android_library(
         "//mediapipe/java/com/google/mediapipe/components:android_camerax_helper",
         "//mediapipe/java/com/google/mediapipe/components:android_components",
         "//mediapipe/java/com/google/mediapipe/framework:android_framework",
+        "//mediapipe/framework/formats:classification_java_proto_lite",
         "//mediapipe/java/com/google/mediapipe/glutil",
         "//third_party:androidx_appcompat",
         "//third_party:androidx_constraint_layout",

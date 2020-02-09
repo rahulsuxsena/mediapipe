@@ -2,7 +2,7 @@ type: "HandGestureSubgraph"
 
 input_stream: "throttled_input_video"
 input_stream: "NORM_RECT:hand_rect_from_palm_detections"
-output_stream: "RENDER_DATA:gesture_render_data"
+output_stream: "CLASSIFICATIONS:classifications"
 
 
 # Crops the rectangle that contains a hand from the input image.
@@ -78,21 +78,3 @@ label_map_path: "rps_labelmap.txt"
 }
 }
 
-
-node {
-   calculator: "LabelsToRenderDataCalculator"
-   input_stream: "CLASSIFICATIONS:classifications"
-   output_stream: "RENDER_DATA:gesture_render_data"
-   options {
-     [mediapipe.LabelsToRenderDataCalculatorOptions.ext] {
-       color { r: 255 g: 0 b: 0 }
-       color { r: 255 g: 0 b: 0 }
-       color { r: 255 g: 0 b: 0 }
-       thickness: 5.0
-       font_height_px: 5
-       max_num_labels: 3
-       font_face: 1
-       location: TOP_LEFT
-     }
-   }
-}
