@@ -145,13 +145,13 @@ REGISTER_CALCULATOR(TfLiteTensorsToClassificationCalculator);
     classification->set_index(i);
     classification->set_score(raw_scores[i]);
 
-    LOG(INFO) << i << " - " << raw_scores[i] << " : " ;
+//    LOG(INFO) << i << " - " << raw_scores[i] << " : " ;
 
     if (label_map_loaded_) {
       classification->set_label(label_map_[i]);
     }
   }
-  LOG(INFO) << " \n ";
+//  LOG(INFO) << " \n ";
 
   // Note that partial_sort will raise error when top_k_ >
   // classification_list->classification_size().
@@ -171,7 +171,7 @@ REGISTER_CALCULATOR(TfLiteTensorsToClassificationCalculator);
 
   }
 
-  LOG(INFO) << "After classification \n ";
+//  LOG(INFO) << "After classification \n ";
 
   cc->Outputs()
       .Tag("CLASSIFICATIONS")
