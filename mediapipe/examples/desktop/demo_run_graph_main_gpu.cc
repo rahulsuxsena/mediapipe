@@ -166,10 +166,10 @@ DEFINE_string(output_pose_path, "",
 		    out << hand_index << " "; 
 		    for (const auto &landmark : hand_landmarks.landmark())
 		    {
-			    std::cout << "[Hand<" << hand_index << ">] Landmark<" << landmark_index++ << ">: (" << landmark.x() << ", " << landmark.y() << ", " << landmark.z() << ")\n";
+			    //std::cout << "[Hand<" << hand_index << ">] Landmark<" << landmark_index++ << ">: (" << landmark.x() << ", " << landmark.y() << ", " << landmark.z() << ")\n";
 			    out << landmark.x() << " " << landmark.y() << " " << landmark.z() << " ";
 		    }
-		    std::cout << "\n";
+		    //std::cout << "\n";
 		    ++hand_index;
 	    }
     }
@@ -180,10 +180,10 @@ DEFINE_string(output_pose_path, "",
 		    out << hand_index << " "; 
 		    for (const auto &landmark : hand_landmarks.landmark())
 		    {
-			    std::cout << "[Hand<" << hand_index << ">] Landmark<" << landmark_index++ << ">: (" << landmark.x() << ", " << landmark.y() << ", " << landmark.z() << ")\n";
+			    //std::cout << "[Hand<" << hand_index << ">] Landmark<" << landmark_index++ << ">: (" << landmark.x() << ", " << landmark.y() << ", " << landmark.z() << ")\n";
 			    out << landmark.x() << " " << landmark.y() << " " << landmark.z() << " ";
 		    }
-		    std::cout << "\n";
+		    //std::cout << "\n";
 		    ++hand_index;
 	    }
 	out <<"1 ";  

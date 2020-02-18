@@ -13,6 +13,7 @@ node {
   output_stream: "IMAGE_GPU:hand_image"
 }
 
+
 #node {
 #  calculator: "GpuBufferToImageFrameCalculator"
 #  input_stream: "hand_image"
@@ -57,7 +58,7 @@ node {
 node {
   calculator: "TfLiteInferenceCalculator"
   input_stream: "TENSORS_GPU:image_tensor"
-  input_side_packet: "CUSTOM_OP_RESOLVER:op_resolver"
+  #input_side_packet: "CUSTOM_OP_RESOLVER:op_resolver"
   output_stream: "TENSORS:detection_tensors"
   node_options: {
     [type.googleapis.com/mediapipe.TfLiteInferenceCalculatorOptions] {
@@ -71,7 +72,7 @@ input_stream: "TENSORS:detection_tensors"
 output_stream: "CLASSIFICATIONS:classifications"
 node_options: {
 [type.googleapis.com/mediapipe.TfLiteTensorsToClassificationCalculatorOptions] {
-min_score_threshold: 0.0
+min_score_threshold: 0
 top_k: 1
 label_map_path: "rps_labelmap.txt"
 }
