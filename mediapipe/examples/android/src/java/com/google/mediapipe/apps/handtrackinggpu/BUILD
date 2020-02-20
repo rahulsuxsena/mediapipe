@@ -88,6 +88,7 @@ android_library(
         "//third_party:androidx_material",
         "//third_party:androidx_recyclerview",
         "//third_party:opencv",
+        "//third_party:tensorflow_android",
         "@androidx_concurrent_futures//jar",
         "@androidx_lifecycle//jar",
         "@com_google_code_findbugs//jar",

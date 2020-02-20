@@ -227,6 +227,7 @@ maven_install(
         "androidx.legacy:legacy-support-v4:aar:1.0.0",
         "androidx.recyclerview:recyclerview:aar:1.1.0-beta02",
         "com.google.android.material:material:aar:1.0.0-rc01",
+        "org.tensorflow:tensorflow-android:1.13.1",
     ],
     repositories = [
         "https://dl.google.com/dl/android/maven2",
@@ -280,11 +281,13 @@ maven_jar(
 # You may run setup_android.sh to install Android SDK and NDK.
 android_ndk_repository(
     name = "androidndk",
+    #    path = "/Users/amanarora/Library/Android/sdk/ndk/21.0.6113669",
     path = "/home/prince/Android/Sdk/ndk-bundle/android-ndk-r18b",
 )
 
 android_sdk_repository(
     name = "androidsdk",
+    #    path = "/Users/amanarora/Library/Android/sdk",
     path = "/home/prince/Android/Sdk",
 )
 

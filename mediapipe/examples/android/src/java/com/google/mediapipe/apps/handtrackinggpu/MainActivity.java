@@ -35,6 +35,12 @@ import com.google.mediapipe.framework.PacketGetter;
 import com.google.mediapipe.glutil.EglManager;
 import com.google.protobuf.InvalidProtocolBufferException;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+//import com.google.mediapipe.apps.hairsegmentationgpu.;
+
 /** Main activity of MediaPipe example apps. */
 public class MainActivity extends AppCompatActivity {
   private static final String TAG = "MainActivity";
@@ -45,6 +51,20 @@ public class MainActivity extends AppCompatActivity {
   private static final String OUTPUT_HAND_PRESENCE_STREAM_NAME = "hand_presence";
   private static final String OUTPUT_LANDMARKS_STREAM_NAME = "hand_landmarks";
   private static final CameraHelper.CameraFacing CAMERA_FACING = CameraHelper.CameraFacing.FRONT;
+
+  //Gesture classifier
+  private static final int N_SAMPLES = 200;
+  private String[] labels = {"Letter J", "Letter Z"};
+  private float[] results;
+  private TensorFlowClassifier classifier;
+  private static List<Float> x;
+
+
+
+
+
+
+
 
   // Flips the camera-preview frames vertically before sending them into FrameProcessor to be
   // processed in a MediaPipe graph, and flips the processed frames back when they are displayed.
@@ -75,10 +95,45 @@ public class MainActivity extends AppCompatActivity {
   // Handles camera access via the {@link CameraX} Jetpack support library.
   private CameraXPreviewHelper cameraHelper;
 
+
+  private  void activityPrediction(List<Float> x) {
+    if (x.size() == N_SAMPLES) {
+      List<Float> data = new ArrayList<>();
+      data.addAll(x);
+
+      results = classifier.predictProbabilities(toFloatArray(data));
+
+      System.out.println("Results" + Float.toString(round(results[0], 2)));
+      System.out.println("Results" + Float.toString(round(results[1], 2)));
+      x.clear();
+    }
+  }
+
+  private float[] toFloatArray(List<Float> list) {
+    int i = 0;
+    float[] array = new float[list.size()];
+
+    for (Float f : list) {
+      array[i++] = (f != null ? f : Float.NaN);
+    }
+    return array;
+  }
+
+  private static float round(float d, int decimalPlace) {
+    BigDecimal bd = new BigDecimal(Float.toString(d));
+    bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+    return bd.floatValue();
+  }
+
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+
+    x = new ArrayList<>();
+    classifier = new TensorFlowClassifier(getApplicationContext());
+
 
     previewDisplayView = new SurfaceView(this);
     setupPreviewDisplayView();
@@ -207,9 +262,11 @@ public class MainActivity extends AppCompatActivity {
     cameraHelper.startCamera(this, CAMERA_FACING, /*surfaceTexture=*/ null);
   }
 
-  private static String getLandmarksDebugString(NormalizedLandmarkList landmarks) {
+  private String getLandmarksDebugString(NormalizedLandmarkList landmarks) {
     int landmarkIndex = 0;
     String landmarksString = "";
+
+    x.add(0.0f);
     for (NormalizedLandmark landmark : landmarks.getLandmarkList()) {
       landmarksString +=
           "\t\tLandmark["
@@ -223,6 +280,13 @@ public class MainActivity extends AppCompatActivity {
               + ")\n";
       ++landmarkIndex;
     }
+    x.add(1.0f);
+    for (int i = 0; i < 63; i++) {
+      x.add(0.0f);
+    }
+    System.out.println("Size == " + x.size());
+
+    activityPrediction(x);
     return landmarksString;
   }
 }
